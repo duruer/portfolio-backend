@@ -1,8 +1,17 @@
-language: java
-branches:
-  only:
-    - test-deploy
+matrix:
+  include:
+    - language: java
+    - language: node.js
+      install:
+        - git clone https://github.com/kahverengi001/portfolio.git portfolio-front-end
+        - cd $TRAVIS_REPO_SLUG
+        - npm run build
+        - cp public ../public
+
 deploy:
-  provider: heroku:git
+  provider: heroku
   api_key: $HEROKU_API_KEY
+  strategy: api
   app: test-kahverengi-portfolio
+  on:
+    branch: test-deploy
