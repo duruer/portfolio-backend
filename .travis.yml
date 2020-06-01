@@ -1,18 +1,25 @@
-matrix:
-  include:
-    - language: java
-    - language: node.js
-      install:
-        - git clone https://github.com/kahverengi001/portfolio.git portfolio-front-end
-        - cd portfolio-front-end
-        - npx yarn
-        - npm run build
-        - cp public ../public
+language: generic
+
+install:
+  - nvm use 11.0.0
+  - npm --version
+  - node --version
+  - ./gradlew build
+  - git clone https://github.com/kahverengi001/portfolio.git portfolio-front-end
+  - cd portfolio-front-end
+  - npm install
+  - npm run build
+  - ls
+  - ls ..
+  - cp -avr public ../public
+  - cd ..
+  - rm -rf portfolio-front-end
 
 deploy:
   provider: heroku
+  skip_cleanup: true
   api_key: $HEROKU_API_KEY
   strategy: api
   app: test-kahverengi-portfolio
   on:
-    branch: test-deploy
+    branch: master
