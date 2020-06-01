@@ -69,4 +69,8 @@ tasks {
     build {
         dependsOn("copyJar")
     }
+
+    register("stage") {
+        dependsOn("build")
+    }
 }
