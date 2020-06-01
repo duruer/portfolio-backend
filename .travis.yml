@@ -4,7 +4,7 @@ matrix:
     - language: node.js
       install:
         - git clone https://github.com/kahverengi001/portfolio.git portfolio-front-end
-        - cd $TRAVIS_REPO_SLUG
+        - cd portfolio-front-end
         - npm run build
         - cp public ../public
 
