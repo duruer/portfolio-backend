@@ -3,7 +3,7 @@ package com.ahmetduruer.portfolio.di.module
 import com.ahmetduruer.portfolio.model.Route
 import com.ahmetduruer.portfolio.model.RouteType
 import com.ahmetduruer.portfolio.model.Template
-import com.ahmetduruer.portfolio.route.staticFolder.AssetsFolder
+import com.ahmetduruer.portfolio.route.staticFolder.PublicFolder
 import com.ahmetduruer.portfolio.route.template.IndexTemplate
 import dagger.Module
 import dagger.Provides
@@ -25,7 +25,7 @@ class RouterModule(private val mVertx: Vertx) {
 
     private val mStaticFolderRouteList by lazy {
         arrayOf<Route>(
-                AssetsFolder()
+                PublicFolder()
         )
     }
 
