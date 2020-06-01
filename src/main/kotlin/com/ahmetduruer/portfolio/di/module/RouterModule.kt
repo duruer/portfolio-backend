@@ -3,16 +3,13 @@ package com.ahmetduruer.portfolio.di.module
 import com.ahmetduruer.portfolio.model.Route
 import com.ahmetduruer.portfolio.model.RouteType
 import com.ahmetduruer.portfolio.model.Template
+import com.ahmetduruer.portfolio.route.staticFolder.AssetsFolder
 import com.ahmetduruer.portfolio.route.template.IndexTemplate
 import dagger.Module
 import dagger.Provides
 import io.vertx.core.Vertx
-import io.vertx.core.http.HttpMethod
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.BodyHandler
-import io.vertx.ext.web.handler.CorsHandler
-import io.vertx.ext.web.handler.SessionHandler
-import io.vertx.ext.web.sstore.LocalSessionStore
 import javax.inject.Singleton
 
 @Module
@@ -28,6 +25,7 @@ class RouterModule(private val mVertx: Vertx) {
 
     private val mStaticFolderRouteList by lazy {
         arrayOf<Route>(
+                AssetsFolder()
         )
     }
 
