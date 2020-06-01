@@ -25,13 +25,7 @@ vertx {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
-    testImplementation(group = "junit", name = "junit", version = "4.12")
-    testImplementation("io.vertx:vertx-unit:$vertxVersionVariable")
-
     implementation("io.vertx:vertx-web:$vertxVersionVariable")
-    implementation("io.vertx:vertx-lang-kotlin:$vertxVersionVariable")
-    implementation("io.vertx:vertx-web-templ-handlebars:$vertxVersionVariable")
-    implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxVersionVariable")
 
     // vertx dependency
     implementation("org.slf4j:slf4j-simple:1.7.30")
