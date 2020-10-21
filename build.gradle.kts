@@ -1,14 +1,14 @@
 plugins {
     java
-    kotlin("jvm") version "1.3.72"
-    kotlin("kapt") version "1.3.72"
-    id("io.vertx.vertx-plugin") version "1.0.3"
+    kotlin("jvm") version "1.4.10"
+    kotlin("kapt") version "1.4.10"
+    id("io.vertx.vertx-plugin") version "1.1.3"
 }
 
 group = "com.ahmetduruer.portfolio"
 version = "1.0"
 
-val vertxVersionVariable = "3.9.1"
+val vertxVersionVariable = "3.9.4"
 
 repositories {
     jcenter()
@@ -31,8 +31,8 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:1.7.30")
 
     // dagger 2x
-    implementation("com.google.dagger:dagger:2.27")
-    kapt("com.google.dagger:dagger-compiler:2.27")
+    implementation("com.google.dagger:dagger:2.29.1")
+    kapt("com.google.dagger:dagger-compiler:2.29.1")
 }
 
 configure<JavaPluginConvention> {
