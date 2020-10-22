@@ -9,12 +9,13 @@ install:
   - cd portfolio-front-end
   - npm install
   - npm run build
-  - ls
+  - ls -a
   - ls ..
   - cp -avr public ../public
   - cd ..
   - rm -rf portfolio-front-end
-  - ls
+  - ls -a
+  - ls -a public
 
 deploy:
   provider: heroku
