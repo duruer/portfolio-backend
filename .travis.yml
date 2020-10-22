@@ -18,7 +18,7 @@ install:
 
 deploy:
   provider: heroku
-  skip_cleanup: true
+  cleanup: true
   api_key: $HEROKU_API_KEY
   strategy: api
   app: kahverengi-portfolio
