@@ -5,11 +5,7 @@ import com.ahmetduruer.portfolio.di.component.DaggerApplicationComponent
 import com.ahmetduruer.portfolio.di.module.LoggerModule
 import com.ahmetduruer.portfolio.di.module.RouterModule
 import com.ahmetduruer.portfolio.di.module.VertxModule
-import io.vertx.core.AbstractVerticle
-import io.vertx.core.Future
-import io.vertx.core.Vertx
-import io.vertx.core.VertxOptions
-import io.vertx.core.http.HttpServerRequest
+import io.vertx.core.*
 import io.vertx.core.logging.Logger
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.ext.web.Router
@@ -17,15 +13,19 @@ import javax.inject.Inject
 
 class Main : AbstractVerticle() {
     companion object {
-        private val mOptions = VertxOptions()
-        private val mVertx = Vertx.vertx(mOptions)
+        private val mOptions by lazy {
+            VertxOptions()
+        }
+        private val mVertx by lazy {
+            Vertx.vertx(mOptions)
+        }
         private val mLogger = LoggerFactory.getLogger("Kahverengi Portfolio")
 
         val ENVIRONMENT =
-                if (System.getenv("EnvironmentType").isNullOrEmpty())
-                    EnvironmentType.RELEASE
-                else
-                    EnvironmentType.DEVELOPMENT
+            if (System.getenv("EnvironmentType").isNullOrEmpty())
+                EnvironmentType.RELEASE
+            else
+                EnvironmentType.DEVELOPMENT
 
         const val PORT = 8088
         const val DEFAULT_PUBLIC_PATH = "public/"
@@ -35,14 +35,7 @@ class Main : AbstractVerticle() {
             mVertx.deployVerticle(Main())
         }
 
-        private val mComponent: ApplicationComponent by lazy {
-            DaggerApplicationComponent
-                    .builder()
-                    .vertxModule(VertxModule(mVertx))
-                    .loggerModule(LoggerModule(mLogger))
-                    .routerModule(RouterModule(mVertx))
-                    .build()
-        }
+        private lateinit var mComponent: ApplicationComponent
 
         internal fun getComponent() = mComponent
 
@@ -57,8 +50,7 @@ class Main : AbstractVerticle() {
     @Inject
     lateinit var router: Router
 
-    @Throws(Exception::class)
-    override fun start(startFuture: Future<Void>) {
+    override fun start(startPromise: Promise<Void>?) {
         vertx.executeBlocking<Any>({ future ->
             init().onComplete { init ->
                 future.complete(init.result())
@@ -69,6 +61,13 @@ class Main : AbstractVerticle() {
     }
 
     private fun init() = Future.future<Boolean> { init ->
+        mComponent = DaggerApplicationComponent
+            .builder()
+            .vertxModule(VertxModule(vertx))
+            .loggerModule(LoggerModule(mLogger))
+            .routerModule(RouterModule(vertx))
+            .build()
+
         getComponent().inject(this)
 
         init.complete(true)
@@ -76,13 +75,13 @@ class Main : AbstractVerticle() {
 
     private fun startWebServer() {
         vertx
-                .createHttpServer()
-                .requestHandler(router)
-                .listen(Integer.getInteger("http.port", PORT), System.getProperty("http.address", "0.0.0.0")) { result ->
-                    if (result.succeeded())
-                        logger.info("Started listening port $PORT")
-                    else
-                        logger.error("Failed to listen port $PORT")
-                }
+            .createHttpServer()
+            .requestHandler(router)
+            .listen(Integer.getInteger("http.port", PORT), System.getProperty("http.address", "0.0.0.0")) { result ->
+                if (result.succeeded())
+                    logger.info("Started listening port $PORT")
+                else
+                    logger.error("Failed to listen port $PORT")
+            }
     }
 }

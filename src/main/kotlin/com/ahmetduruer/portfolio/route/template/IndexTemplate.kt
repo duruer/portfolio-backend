@@ -22,6 +22,6 @@ class IndexTemplate : Template() {
                     mHotLinks[normalisedPath.toLowerCase()]
             ).setStatusCode(302).end()
         else
-            response.sendFile(Main.DEFAULT_PUBLIC_PATH + "index.html").end()
+            response.sendFile(Main.DEFAULT_PUBLIC_PATH + "index.html")
     }
 }
