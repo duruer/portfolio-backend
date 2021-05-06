@@ -6,7 +6,8 @@ import io.vertx.core.Handler
 import io.vertx.ext.web.RoutingContext
 
 class IndexTemplate : Template() {
-    private val mHotLinks = mapOf<String, String>()
+    private val mHotLinks =
+        mapOf("/ref1" to "https://i.resmim.net/i/index-3.jpg", "/ref2" to "https://i.resmim.net/i/index-2-1.jpg")
 
     override val routes = arrayListOf("/*")
 
